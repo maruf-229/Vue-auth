@@ -1,6 +1,12 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from "vue";
+import { RouterLink, RouterView } from "vue-router";
+import HelloWorld from "./components/HelloWorld.vue";
+
+import { useAuthToken } from '@/composables/useAuthToken';
+
+const { authToken } = useAuthToken(); 
+
 </script>
 
 <template>
@@ -13,6 +19,9 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink v-if="!authToken" to="/login">Login</RouterLink>
+        <RouterLink v-if="!authToken" to="/register">Register</RouterLink>
+        <RouterLink v-if="authToken" to="/dashboard">Dashboard</RouterLink>
       </nav>
     </div>
   </header>
@@ -21,6 +30,7 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
+/* Your existing styles */
 header {
   line-height: 1.5;
   max-height: 100vh;
